@@ -1,10 +1,8 @@
-// Fichier principal JavaScript
 const terminal = document.getElementById("terminal");
 let history = [];
 let historyIndex = -1;
 let currentPath = "C:\\Users\\User";
 
-// Structure de répertoires fictive
 const fileSystem = {
     "C:": {
         "Users": {
@@ -17,7 +15,6 @@ const fileSystem = {
     }
 };
 
-// Fonction pour vérifier si un chemin existe
 function pathExists(path) {
     const parts = path.split("\\");
     let current = fileSystem;
@@ -30,7 +27,6 @@ function pathExists(path) {
     return true;
 }
 
-// Fonction pour normaliser un chemin
 function normalizePath(path) {
     const parts = path.split("\\");
     const stack = [];
@@ -46,7 +42,6 @@ function normalizePath(path) {
     return stack.join("\\");
 }
 
-// Fonction pour obtenir le répertoire courant
 function getCurrentDirectory() {
     const parts = currentPath.split("\\");
     let current = fileSystem;
@@ -56,18 +51,16 @@ function getCurrentDirectory() {
     return current;
 }
 
-// Ajoute une ligne de texte au terminal
 function appendLine(text = "", isInput = false) {
     const line = document.createElement("div");
     line.textContent = isInput ? `${currentPath}> ${text}` : text;
     terminal.appendChild(line);
     terminal.scrollTop = terminal.scrollHeight;
     if (!isInput) {
-        terminal.appendChild(document.createElement("div")); // Ajoute une ligne vide après chaque réponse
+        terminal.appendChild(document.createElement("div"));
     }
 }
 
-// Crée un nouveau prompt pour l'entrée utilisateur
 function createPrompt() {
     const inputLine = document.createElement("div");
     inputLine.className = "input-line";
@@ -76,7 +69,6 @@ function createPrompt() {
     document.getElementById("input").focus();
 }
 
-// Liste des commandes disponibles
 const commands = {
     help: `Pour plus d'informations sur une commande spécifique, entrez HELP suivi de la commande.
 DIR            Affiche la liste des répertoires et fichiers.
@@ -182,7 +174,6 @@ RM             Supprime un fichier ou un dossier.`,
     }
 };
 
-// Gestion des événements clavier
 document.addEventListener("keydown", function(event) {
     const input = document.getElementById("input");
     if (!input) return;
@@ -222,7 +213,6 @@ document.addEventListener("keydown", function(event) {
     }
 });
 
-// Initialisation du terminal
 document.addEventListener('DOMContentLoaded', () => {
     createPrompt();
-}); 
+});
