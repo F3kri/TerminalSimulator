@@ -1,0 +1,164 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+    color: #3CFF97;
+    font-family: 'JetBrains Mono', 'Consolas', 'Courier New', monospace;
+    margin: 0;
+    padding: 25px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#terminal {
+    width: 90%;
+    max-width: 900px;
+    height: 80vh;
+    background: rgba(10, 10, 10, 0.95);
+    border-radius: 12px;
+    padding: 20px;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 0 30px rgba(60, 255, 151, 0.1),
+                0 0 60px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(60, 255, 151, 0.1);
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+#terminal::-webkit-scrollbar {
+    width: 6px;
+}
+
+#terminal::-webkit-scrollbar-track {
+    background: rgba(10, 10, 10, 0.5);
+    border-radius: 3px;
+}
+
+#terminal::-webkit-scrollbar-thumb {
+    background: #3CFF97;
+    border-radius: 3px;
+    opacity: 0.5;
+}
+
+#terminal::-webkit-scrollbar-thumb:hover {
+    background: #2be088;
+}
+
+.input-line {
+    display: flex;
+    align-items: center;
+    margin: 4px 0;
+    padding: 4px 0;
+}
+
+.input-line span {
+    color: #3CFF97;
+    text-shadow: 0 0 8px rgba(60, 255, 151, 0.4);
+    margin-right: 8px;
+    font-weight: 500;
+}
+
+#input {
+    background: none;
+    border: none;
+    color: #3CFF97;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    flex-grow: 1;
+    caret-color: #3CFF97;
+}
+
+#terminal div {
+    font-size: 14px;
+    line-height: 1.5;
+    letter-spacing: 0.3px;
+    opacity: 0;
+    animation: fadeIn 0.2s ease forwards;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-2px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.error-message {
+    color: #FF5D5D !important;
+    text-shadow: 0 0 8px rgba(255, 93, 93, 0.4);
+}
+
+.success-message {
+    color: #3CFF97 !important;
+    text-shadow: 0 0 8px rgba(60, 255, 151, 0.4);
+}
+
+#terminal:focus-within {
+    box-shadow: 0 0 40px rgba(60, 255, 151, 0.15),
+                0 0 80px rgba(0, 0, 0, 0.3);
+}
+
+.input-line {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.input-line:hover {
+    background: rgba(60, 255, 151, 0.05);
+    border-radius: 4px;
+}
+
+.cursor {
+    display: inline-block;
+    width: 8px;
+    height: 15px;
+    background-color: #3CFF97;
+    animation: blink 1s infinite;
+    vertical-align: middle;
+    border-radius: 1px;
+    box-shadow: 0 0 8px rgba(60, 255, 151, 0.4);
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+#terminal div:not(.input-line) {
+    color: #e0e0e0;
+    margin: 6px 0;
+    padding-left: 8px;
+    border-left: 2px solid rgba(60, 255, 151, 0.1);
+}
+
+#terminal div.input-line:hover span {
+    color: #2be088;
+}
+
+#terminal {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: terminalAppear 0.5s ease forwards;
+}
+
+@keyframes terminalAppear {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
