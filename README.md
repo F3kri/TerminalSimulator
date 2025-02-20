@@ -1,17 +1,14 @@
 # Simulateur de Terminal
 
-Un simulateur de terminal interactif en HTML, CSS et JavaScript vanilla.
+Un simulateur de terminal interactif en HTML, CSS et JavaScript.
+
+https://https://osterminal.netlify.app
 
 ## Fonctionnalités
 
-- Exécution de commandes de base (ex: `help`, `clear`, `about`)
+- Exécution de commandes de base (ex: `help`)
 - Interface qui imite un vrai terminal
-- Support de l'autocomplétion basique
 - Style personnalisable via CSS
-
-## Prérequis
-
-Aucun prérequis n'est nécessaire, il suffit d'un navigateur moderne.
 
 ## Installation
 
@@ -28,17 +25,14 @@ Aucun prérequis n'est nécessaire, il suffit d'un navigateur moderne.
 ## Utilisation
 
 - Tapez `help` pour voir la liste des commandes disponibles.
-- Utilisez `clear` pour nettoyer le terminal.
-- Ajoutez vos propres commandes en modifiant `script.js`.
 
 ## Structure du Projet
 
 ```
 /
-|-- index.html      # Structure principale du simulateur
-|-- style.css       # Styles et apparence du terminal
-|-- script.js       # Logique et gestion des commandes
-|-- README.md       # Documentation du projet
+|-- index.html   
+|-- style.css    
+|-- script.js    
 ```
 
 ## Contributions
