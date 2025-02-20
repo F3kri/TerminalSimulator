@@ -39,7 +39,3 @@ https://osterminal.netlify.app
 
 Les contributions sont les bienvenues ! N'hésitez pas à proposer des améliorations via des issues ou des pull requests.
 
-## Licence
-
-Ce projet est sous licence MIT. Vous êtes libre de le modifier et de le distribuer sous les termes de cette licence.
-
