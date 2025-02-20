@@ -2,7 +2,7 @@
 
 Un simulateur de terminal interactif en HTML, CSS et JavaScript.
 
-https://https://osterminal.netlify.app
+https://osterminal.netlify.app
 
 ## Fonctionnalités
 
