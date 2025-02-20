@@ -1,0 +1,141 @@
+.terminal {
+    width: 800px;
+    height: 500px;
+    background-color: #300a24;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.terminal-header {
+    background-color: #3c3b37;
+    padding: 8px;
+    border-radius: 8px 8px 0 0;
+    display: flex;
+    align-items: center;
+}
+
+.terminal-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.terminal-buttons span {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.close { background-color: #ff5f57; }
+.minimize { background-color: #ffbd2e; }
+.maximize { background-color: #28c941; }
+
+.terminal-title {
+    color: #fff;
+    margin-left: 20px;
+}
+
+.terminal-content {
+    padding: 15px;
+    color: #fff;
+    height: calc(100% - 35px);
+    overflow-y: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+#output {
+    margin-bottom: 10px;
+}
+
+#output div {
+    margin-bottom: 5px;
+}
+
+.output-line {
+    margin: 2px 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.command-line {
+    display: flex;
+    align-items: center;
+    margin: 2px 0;
+}
+
+#command-input {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-family: 'Ubuntu Mono', monospace;
+    font-size: 16px;
+    flex-grow: 1;
+    outline: none;
+    margin-left: 8px;
+}
+
+.prompt {
+    color: #4ee44e;
+    white-space: nowrap;
+}
+
+.command-output {
+    color: #fff;
+}
+
+.command-output .prompt {
+    color: #4ee44e;
+    margin-right: 8px;
+}
+
+/* Masquer l'input une fois la commande exécutée */
+.command-line.executed {
+    display: none;
+}
+
+.directory {
+    color: #3465a4;
+    font-weight: bold;
+}
+
+.color-picker-container {
+    margin-left: auto;
+    margin-right: 10px;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.color-picker-icon {
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(45deg, #ff0000, #00ff00, #0000ff);
+    border-radius: 4px;
+    border: 2px solid #fff;
+    transition: transform 0.2s;
+}
+
+.color-picker-icon:hover {
+    transform: scale(1.1);
+}
+
+.color-picker-icon:active {
+    transform: scale(0.95);
+}
+
+#bg-color-picker {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    opacity: 0;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    pointer-events: none;
+}
+
+.color-picker-container.active #bg-color-picker {
+    opacity: 1;
+    pointer-events: auto;
+} 
