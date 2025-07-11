@@ -7,7 +7,6 @@ class Terminal {
         this.setupEventListeners();
         this.displayPrompt();
         
-        // Ajouter la gestion du color picker
         this.setupColorPicker();
     }
 
@@ -120,7 +119,6 @@ class Terminal {
             }
         });
         
-        // Initialiser les couleurs avec la même valeur
         document.body.style.backgroundColor = colorPicker.value;
         terminal.style.backgroundColor = colorPicker.value;
     }

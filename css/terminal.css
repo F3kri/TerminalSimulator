@@ -88,7 +88,6 @@
     margin-right: 8px;
 }
 
-/* Masquer l'input une fois la commande exécutée */
 .command-line.executed {
     display: none;
 }

@@ -22,6 +22,12 @@ class Commands {
                 return this.cd(args[1]);
             case 'pwd':
                 return this.pwd();
+            case 'calc':
+                return this.calc(args.slice(1).join(' '));
+            case 'rand':
+                return this.rand(args[1], args[2]);
+            case 'flipcoin':
+                return this.flipcoin();
             default:
                 return `Commande '${cmd}' non trouvée. Tapez 'help' pour voir la liste des commandes.`;
         }
@@ -30,12 +36,15 @@ class Commands {
     help() {
         return `
 Commandes disponibles:
-help    - Affiche cette aide
-clear   - Efface l'écran
-mkdir   - Crée un nouveau répertoire
-ls      - Liste le contenu du répertoire
-cd      - Change de répertoire
-pwd     - Affiche le répertoire courant
+help      - Affiche cette aide
+clear     - Efface l'écran
+mkdir     - Crée un nouveau répertoire
+ls        - Liste le contenu du répertoire
+cd        - Change de répertoire
+pwd       - Affiche le répertoire courant
+calc      - Calcule une expression mathématique
+rand      - Génère un nombre aléatoire entre min et max
+flipcoin  - Lance une pièce (pile ou face)
         `.trim();
     }
 
@@ -59,5 +68,66 @@ pwd     - Affiche le répertoire courant
 
     pwd() {
         return this.fileSystem.getCurrentDirectory();
+    }
+
+    calc(expression) {
+        if (!expression) {
+            return 'calc: expression manquante. Utilisation: calc <expression>\nExemple: calc 2 + 3 * 4';
+        }
+
+        try {
+            const cleanExpression = expression.replace(/[^0-9+\-*/().\s]/g, '');
+            
+            if (cleanExpression !== expression) {
+                return 'calc: caractères non autorisés détectés. Utilisez seulement les chiffres et les opérateurs +, -, *, /, (, )';
+            }
+
+            const result = eval(cleanExpression);
+            
+            if (isNaN(result) || !isFinite(result)) {
+                return 'calc: résultat invalide';
+            }
+
+            return `Résultat: ${result}`;
+        } catch (error) {
+            return 'calc: expression invalide';
+        }
+    }
+
+    rand(min, max) {
+        if (!min && !max) {
+            return `Nombre aléatoire: ${Math.floor(Math.random() * 100) + 1}`;
+        }
+
+        if (min && !max) {
+            const minNum = parseInt(min);
+            if (isNaN(minNum)) {
+                return 'rand: min doit être un nombre valide';
+            }
+            const maxNum = minNum + 100;
+            return `Nombre aléatoire: ${Math.floor(Math.random() * (maxNum - minNum + 1)) + minNum}`;
+        }
+
+        if (min && max) {
+            const minNum = parseInt(min);
+            const maxNum = parseInt(max);
+            
+            if (isNaN(minNum) || isNaN(maxNum)) {
+                return 'rand: min et max doivent être des nombres valides';
+            }
+            
+            if (minNum >= maxNum) {
+                return 'rand: min doit être inférieur à max';
+            }
+            
+            return `Nombre aléatoire: ${Math.floor(Math.random() * (maxNum - minNum + 1)) + minNum}`;
+        }
+
+        return 'rand: utilisation: rand [min] [max]\nExemples:\n  rand        (1-100)\n  rand 10     (10-110)\n  rand 1 10   (1-10)';
+    }
+
+    flipcoin() {
+        const result = Math.random() < 0.5 ? 'Pile' : 'Face';
+        return `🪙 ${result}`;
     }
 } 
