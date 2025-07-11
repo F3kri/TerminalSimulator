@@ -26,15 +26,6 @@ https://osterminal.netlify.app
 
 - Tapez `help` pour voir la liste des commandes disponibles.
 
-## Structure du Projet
-
-```
-/
-|-- index.html   
-|-- style.css    
-|-- script.js    
-```
-
 ## Contributions
 
 Les contributions sont les bienvenues ! N'hésitez pas à proposer des améliorations via des issues ou des pull requests.
