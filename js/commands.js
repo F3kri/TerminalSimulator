@@ -45,6 +45,8 @@ class Commands {
                 return this.flipcoin();
             case 'bash_history':
                 return this.bash_history();
+            case 'echo':
+                return args.slice(1).join(" ");
             case '':
                 return ''; // Permet d'ingorer les commandes vides
             default:
