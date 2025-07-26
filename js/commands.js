@@ -59,6 +59,7 @@ class Commands {
 Commandes disponibles:
     help          - Affiche cette aide
     clear         - Efface l'écran
+    echo          - Affiche les arguments
     mkdir         - Crée un nouveau répertoire
     ls            - Liste le contenu du répertoire
     cd            - Change de répertoire
