@@ -4,6 +4,10 @@
     background-color: #300a24;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .terminal-header {
@@ -12,7 +16,8 @@
     border-radius: 8px 8px 0 0;
     display: flex;
     align-items: center;
-    user-select: none;
+    user-select: none   ;
+    cursor: pointer;
 }
 
 .terminal-buttons {

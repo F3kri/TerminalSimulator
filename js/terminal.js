@@ -50,6 +50,35 @@ class Terminal {
                 }
             }
         });
+
+        const header = document.getElementsByClassName('terminal-header')[0];
+        const terminal = document.getElementsByClassName('terminal')[0];
+
+        let isDragging = false;
+        let offsetX = 0;
+        let offsetY = 0;
+
+        header.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            
+            // Calcule la position du clic à l’intérieur de l’élément
+            offsetX = e.clientX - terminal.offsetLeft;
+            offsetY = e.clientY - terminal.offsetTop;
+
+        });
+
+        document.addEventListener('mousemove', (e) => {
+        if (isDragging) {
+            // Applique le décalage : déplacement naturel
+            terminal.style.left = (e.clientX - offsetX) + 'px';
+            terminal.style.top = (e.clientY - offsetY) + 'px';
+        }
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+
     }
 
     executeCommand(command) {
