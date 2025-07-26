@@ -47,6 +47,10 @@ class Commands {
                 return this.bash_history();
             case 'echo':
                 return args.slice(1).join(" ");
+            case 'nano':
+                return this.nano(args[1]);
+            case 'cat':
+                return this.cat(args[1]);
             case '':
                 return ''; // Permet d'ingorer les commandes vides
             default:
@@ -76,6 +80,20 @@ Commandes disponibles:
             return 'mkdir: argument manquant';
         }
         return this.fileSystem.createDirectory(dirName);
+    }
+
+    nano(fileName) {
+        if (!fileName) {
+            return 'nano: argument manquant';
+        }
+        return this.fileSystem.createFile(fileName)
+    }
+
+    cat(fileName) {
+        if (!fileName) {
+            return 'cat: argument manquant';
+        }
+        return this.fileSystem.catFile(fileName)
     }
 
     ls() {

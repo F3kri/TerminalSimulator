@@ -23,14 +23,52 @@ class FileSystem {
         }
 
         if (current[name]) {
-            return `mkdir: impossible de créer le répertoire '${name}': Le fichier existe`;
+            return `mkdir: impossible de créer le répertoire '${name}': Le répertoire existe`;
         }
 
         current[name] = {};
         return '';
     }
 
+    createFile(name) {
+        const path = this.currentPath.split('/').filter(p => p);
+        let current = this.structure['/'];
+        
+        for (const dir of path) {
+            current = current[dir];
+        }
+
+        if (current[name]) {
+            return `nano : impossible de créer le fichier '${name}': Le fichier existe`;
+        }
+
+        current[name] = new textFile(name);
+        return '';
+    }
+
+    catFile(name) {
+        const path = this.currentPath.split('/').filter(p => p);
+        let current = this.structure['/'];
+
+        for (const dir of path) {
+            current = current[dir];
+        }
+
+        if (current[name]) {
+            if (current[name] instanceof textFile) {
+                return current[name].catFile()
+            } else {
+                return `cat : impossible de lire le fichier '${name}': c'est un dossier`
+            }
+        } else {
+            return `cat : impossible de lire le fichier '${name}': Le fichier n'existe pas`;
+        }
+    }
+
     listDirectory() {
+
+        console.log(this.structure)
+
         const path = this.currentPath.split('/').filter(p => p);
         let current = this.structure['/'];
         
