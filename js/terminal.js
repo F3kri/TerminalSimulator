@@ -28,7 +28,11 @@ class Terminal {
                 
                 if (result) {
                     e.target.value = result;
-                    input.setSelectionRange(input.value.length, input.value.length); // Met le curseur à la fin
+                    e.target.focus();
+                    requestAnimationFrame(() => {
+                        e.target.focus();
+                        e.target.setSelectionRange(e.target.value.length, e.target.value.length);
+                    });
                 }
             }
 
@@ -46,7 +50,6 @@ class Terminal {
                 
                 if (result) {
                     e.target.value = result;
-                    input.setSelectionRange(input.value.length, input.value.length); // Met le curseur à la fin
                 }
             }
         });

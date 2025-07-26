@@ -17,7 +17,7 @@ class Commands {
 
     execute(command) {
 
-        if (this.commandHistory[this.commandHistory.length - 1] == command) { // Évite d'ajouter deux fois la même commande d'affilé
+        if (this.commandHistory.length == 0 || this.commandHistory[this.commandHistory.length - 1] != command) { // Évite d'ajouter deux fois la même commande d'affilé
             this.commandHistory.push(command)
         }
 
