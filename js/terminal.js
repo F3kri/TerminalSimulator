@@ -3,6 +3,8 @@ class Terminal {
         this.outputElement = document.getElementById('output');
         this.fileSystem = new FileSystem();
         this.commands = new Commands(this.fileSystem);
+
+        this.indexBashHistory = 0 // Index pour remonter l'historique des commandes
         
         this.setupEventListeners();
         this.displayPrompt();
@@ -18,10 +20,40 @@ class Terminal {
                 this.executeCommand(command);
                 e.target.value = '';
             }
+
+            else if (e.target.id === 'command-input' && e.key === 'ArrowUp') {
+                this.indexBashHistory += 1;
+                const result = this.commands.getCommandHistory(this.indexBashHistory)
+                console.log(result);
+                
+                if (result) {
+                    e.target.value = result;
+                    input.setSelectionRange(input.value.length, input.value.length); // Met le curseur à la fin
+                }
+            }
+
+            else if (e.target.id === 'command-input' && e.key === 'ArrowDown') {
+                this.indexBashHistory -= 1;
+
+                if (this.indexBashHistory <= 0) {
+                    this.indexBashHistory = 0;
+                    e.target.value = "";
+                    return
+                }
+
+                const result = this.commands.getCommandHistory(this.indexBashHistory)
+                console.log(result);
+                
+                if (result) {
+                    e.target.value = result;
+                    input.setSelectionRange(input.value.length, input.value.length); // Met le curseur à la fin
+                }
+            }
         });
     }
 
     executeCommand(command) {
+        this.indexBashHistory = 0
         const oldPrompt = this.outputElement.querySelector('.command-line:not(.executed)');
         if (oldPrompt) {
             oldPrompt.classList.add('executed');
@@ -29,7 +61,7 @@ class Terminal {
 
         const commandLine = document.createElement('div');
         commandLine.className = 'output-line command-output';
-        commandLine.innerHTML = `<span class="prompt">user@ubuntu:~$</span> ${command}`;
+        commandLine.innerHTML = `<span class="prompt">${this.getPrompt()}</span>${command}`;
         this.outputElement.appendChild(commandLine);
         
         const output = this.commands.execute(command);
@@ -44,7 +76,7 @@ class Terminal {
     }
 
     getPrompt() {
-        return `user@ubuntu:~$ `;
+        return `user@ubuntu<span style="color:white;">:<span class="directory">${this.fileSystem.getCurrentDirectory()}</span>$</span> `;
     }
 
     displayPrompt() {
