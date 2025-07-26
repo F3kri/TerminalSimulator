@@ -5,7 +5,22 @@ class Commands {
         this.historyIndex = -1;
     }
 
+    getCommandHistory(index) {        
+        if (index <= this.commandHistory.length) {
+            return this.commandHistory[this.commandHistory.length - index];
+        } else if (index == 0) {
+            return "";
+        } else {
+            return false;
+        }
+    }
+
     execute(command) {
+
+        if (this.commandHistory.length == 0 || this.commandHistory[this.commandHistory.length - 1] != command) { // Évite d'ajouter deux fois la même commande d'affilé
+            this.commandHistory.push(command)
+        }
+
         const args = command.trim().split(' ');
         const cmd = args[0].toLowerCase();
 
@@ -28,6 +43,10 @@ class Commands {
                 return this.rand(args[1], args[2]);
             case 'flipcoin':
                 return this.flipcoin();
+            case 'bash_history':
+                return this.bash_history();
+            case '':
+                return ''; // Permet d'ingorer les commandes vides
             default:
                 return `Commande '${cmd}' non trouvée. Tapez 'help' pour voir la liste des commandes.`;
         }
@@ -36,15 +55,16 @@ class Commands {
     help() {
         return `
 Commandes disponibles:
-help      - Affiche cette aide
-clear     - Efface l'écran
-mkdir     - Crée un nouveau répertoire
-ls        - Liste le contenu du répertoire
-cd        - Change de répertoire
-pwd       - Affiche le répertoire courant
-calc      - Calcule une expression mathématique
-rand      - Génère un nombre aléatoire entre min et max
-flipcoin  - Lance une pièce (pile ou face)
+    help          - Affiche cette aide
+    clear         - Efface l'écran
+    mkdir         - Crée un nouveau répertoire
+    ls            - Liste le contenu du répertoire
+    cd            - Change de répertoire
+    pwd           - Affiche le répertoire courant
+    calc          - Calcule une expression mathématique
+    rand          - Génère un nombre aléatoire entre min et max
+    flipcoin      - Lance une pièce (pile ou face)
+    bash_history  - Affiche l'historique des commandes
         `.trim();
     }
 
@@ -129,5 +149,9 @@ flipcoin  - Lance une pièce (pile ou face)
     flipcoin() {
         const result = Math.random() < 0.5 ? 'Pile' : 'Face';
         return `🪙 ${result}`;
+    }   
+
+    bash_history() {
+        return "Historique des commandes :\n    " + this.commandHistory.join("\n    ");
     }
 } 
