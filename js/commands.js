@@ -67,7 +67,7 @@ Commandes disponibles:
     mkdir         - Crée un nouveau répertoire
     ls            - Liste le contenu du répertoire
     cd            - Change de répertoire
-    nan           - Cré ou édite un fichier texte
+    nano          - Cré ou édite un fichier texte
     cat           - Affiche le contenus d'un fichier text
     pwd           - Affiche le répertoire courant
     calc          - Calcule une expression mathématique
