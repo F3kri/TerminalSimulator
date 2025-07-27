@@ -43,7 +43,7 @@ class FileSystem {
             current = current[dir];
         }
 
-        current[name] = new textFile(name, document.getElementById("editorChamp").innerText);
+        current[name] = new textFile(name, document.getElementById("editorChamp").innerText.replace(/</g, "&lt;").replace(/>/g, "&gt;")); // .replace pour empecher les injection HTML
          
     }
 
