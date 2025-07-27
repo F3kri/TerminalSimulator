@@ -30,7 +30,12 @@ class FileSystem {
         return '';
     }
 
-    createFile(name) {
+    exitNano(terminalContent, beforHTML) {
+        terminalContent.innerHTML = beforHTML;
+    }
+
+    saveNano(name) {
+
         const path = this.currentPath.split('/').filter(p => p);
         let current = this.structure['/'];
         
@@ -38,12 +43,79 @@ class FileSystem {
             current = current[dir];
         }
 
-        if (current[name]) {
-            return `nano : impossible de créer le fichier '${name}': Le fichier existe`;
+        current[name] = new textFile(name, document.getElementById("editorChamp").innerText);
+         
+    }
+
+    createFile(name) {
+
+        const terminalContent = document.getElementById('output');
+
+        terminalContent.style.height = "100%"
+
+        const path = this.currentPath.split('/').filter(p => p);
+        let current = this.structure['/'];
+
+        for (const dir of path) {
+            current = current[dir];
         }
 
-        current[name] = new textFile(name);
-        return '';
+        let content = "";
+
+        if (current[name]) {
+            if (current[name] instanceof textFile) {
+                content = current[name].catFile()
+            } else {
+                document.dispatchEvent(new CustomEvent("nanoEvent", { detail: `"${name} est un répertoire"` }));
+                return
+            }
+        }
+
+        const beforHTML = terminalContent.innerHTML
+        terminalContent.innerHTML = `<div class="editor"><div class="header">GNU nano 1.0</div><div id="editorChamp" contenteditable="true">${content}</div><div class="footer"><span class="keyboardInfo">^X</span>Exit<span class="keyboardInfo">^S</span>Save</div></div>`.trim();
+
+        const editorChamp = document.getElementById("editorChamp");
+        editorChamp.focus();
+
+        let ctrlPress = false;
+
+        this.cleanEventListener = () => {
+            document.removeEventListener("keydown", this.detecteAction);
+            document.removeEventListener("keyup", this.detectCtrl);
+        }
+
+        this.detectCtrl = (e) => {
+            if (e.key == "Control") {
+                ctrlPress = false
+            }
+        }
+
+        this.detecteAction = (e) => {
+            if (e.key == "Control") {
+                ctrlPress = true
+            } else if (ctrlPress) {
+                if (e.key == "s") {
+                    e.preventDefault();
+                    this.cleanEventListener();
+                    this.saveNano(name);
+                    this.exitNano(terminalContent, beforHTML);
+                    terminalContent.style.height = ""
+                    document.dispatchEvent(new CustomEvent("nanoEvent", { detail: "" })); // La fonction nano dans commands.js return WAIT nanoEvent. le terminal attent un événement nanoEvent
+                }
+
+                if (e.key == "x") {
+                    e.preventDefault();
+                    this.cleanEventListener();
+                    this.exitNano(terminalContent, beforHTML);
+                    terminalContent.style.height = ""
+                    document.dispatchEvent(new CustomEvent("nanoEvent", { detail: "" }));
+                }
+            }
+        }
+
+        document.addEventListener('keydown', this.detecteAction)
+        document.addEventListener('keyup', this.detectCtrl)
+        
     }
 
     catFile(name) {
@@ -66,9 +138,6 @@ class FileSystem {
     }
 
     listDirectory() {
-
-        console.log(this.structure)
-
         const path = this.currentPath.split('/').filter(p => p);
         let current = this.structure['/'];
         

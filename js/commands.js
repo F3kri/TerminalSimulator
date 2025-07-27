@@ -67,6 +67,8 @@ Commandes disponibles:
     mkdir         - Crée un nouveau répertoire
     ls            - Liste le contenu du répertoire
     cd            - Change de répertoire
+    nan           - Cré ou édite un fichier texte
+    cat           - Affiche le contenus d'un fichier text
     pwd           - Affiche le répertoire courant
     calc          - Calcule une expression mathématique
     rand          - Génère un nombre aléatoire entre min et max
@@ -86,7 +88,8 @@ Commandes disponibles:
         if (!fileName) {
             return 'nano: argument manquant';
         }
-        return this.fileSystem.createFile(fileName)
+        this.fileSystem.createFile(fileName);
+        return 'WAIT nanoEvent';
     }
 
     cat(fileName) {

@@ -24,7 +24,6 @@ class Terminal {
             else if (e.target.id === 'command-input' && e.key === 'ArrowUp') {
                 this.indexBashHistory += 1;
                 const result = this.commands.getCommandHistory(this.indexBashHistory)
-                console.log(result);
                 
                 if (result) {
                     e.target.value = result;
@@ -46,7 +45,6 @@ class Terminal {
                 }
 
                 const result = this.commands.getCommandHistory(this.indexBashHistory)
-                console.log(result);
                 
                 if (result) {
                     e.target.value = result;
@@ -84,7 +82,14 @@ class Terminal {
 
     }
 
+    updateTitle(title="Ubuntu") {
+        const rootTitle = document.getElementsByClassName("terminal-title")[0];
+        rootTitle.innerText = `Terminal ~ ${title}`;
+        document.title = `Terminal ~ ${title}`;
+    }
+
     executeCommand(command) {
+        this.updateTitle(command.trim().split(' ')[0]);
         this.indexBashHistory = 0
         const oldPrompt = this.outputElement.querySelector('.command-line:not(.executed)');
         if (oldPrompt) {
@@ -97,14 +102,35 @@ class Terminal {
         this.outputElement.appendChild(commandLine);
         
         const output = this.commands.execute(command);
+
+        const end = () => { // Affiche un nouveau prompt et rénitialise le titre
+            this.displayPrompt();
+            this.updateTitle();
+        }
         
         if (output === 'CLEAR') {
             this.clearOutput();
+            end();
+        } else if (output.startsWith('WAIT')) { // Permet de demander d'attendre que EventListener en position 1 soit résolut en retournant e.detail 
+            
+            const eventName = output.trim().split(' ')[1]
+
+            this.waitResponse = (e) => {
+                document.removeEventListener(eventName, this.waitResponse);
+                this.appendOutput(e.detail);
+                end();
+            }
+
+            document.addEventListener(eventName, this.waitResponse)
+
         } else if (output) {
             this.appendOutput(output);
+            end();
+
+        } else {
+            end();
         }
         
-        this.displayPrompt();
     }
 
     getPrompt() {
@@ -115,9 +141,8 @@ class Terminal {
         const promptElement = document.createElement('div');
         promptElement.className = 'command-line';
         promptElement.innerHTML = `
-            <span class="prompt">${this.getPrompt()}</span>
-            <input type="text" id="command-input" autofocus>
-        `;
+            <span class="prompt">${this.getPrompt()}</span><input type="text" id="command-input" autofocus>
+        `.trim();
         
         const oldPrompt = this.outputElement.querySelector('.command-line:not(.executed)');
         if (oldPrompt) {
@@ -133,6 +158,7 @@ class Terminal {
     }
 
     appendOutput(text) {
+        console.log(text)
         const outputElement = document.createElement('div');
         outputElement.className = 'output-line';
         outputElement.innerHTML = text;
