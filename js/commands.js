@@ -51,6 +51,8 @@ class Commands {
                 return this.nano(args[1]);
             case 'cat':
                 return this.cat(args[1]);
+            case 'credits':
+                return '<a href="https://github.com/F3kri/TerminalSimulator/graphs/contributors" target="_blank">Page de credits</a>';
             case '':
                 return ''; // Permet d'ingorer les commandes vides
             default:
@@ -74,6 +76,7 @@ Commandes disponibles:
     rand          - Génère un nombre aléatoire entre min et max
     flipcoin      - Lance une pièce (pile ou face)
     bash_history  - Affiche l'historique des commandes
+    credits       - Affiche l'url de la page de credits
         `.trim();
     }
 

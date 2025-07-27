@@ -158,7 +158,6 @@ class Terminal {
     }
 
     appendOutput(text) {
-        console.log(text)
         const outputElement = document.createElement('div');
         outputElement.className = 'output-line';
         outputElement.innerHTML = text;

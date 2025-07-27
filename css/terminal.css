@@ -171,3 +171,7 @@
     color: initial;
     margin: 0 5px;
 }
+
+a {
+    color: inherit;
+}
