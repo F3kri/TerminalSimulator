@@ -153,7 +153,7 @@ class FileSystem {
         entries.sort();
         
         return entries.map(entry => {
-            if (typeof current[entry] === 'object') {
+            if (!(current[entry] instanceof textFile)) {
                 return `<span class="directory">${entry}</span>`;
             }
             return entry;
