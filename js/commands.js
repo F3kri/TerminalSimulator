@@ -51,6 +51,8 @@ class Commands {
                 return this.nano(args[1]);
             case 'cat':
                 return this.cat(args[1]);
+            case 'man':
+                return this.man(args[1]);
             case 'credits':
                 return '<a href="https://github.com/F3kri/TerminalSimulator/graphs/contributors" target="_blank">Page de credits</a>';
             case '':
@@ -62,8 +64,9 @@ class Commands {
 
     help() {
         return `
-Commandes disponibles:
+Commandes disponibles :
     help          - Affiche cette aide
+    man           - Affiche l'aide de la commande en entrée
     clear         - Efface l'écran
     echo          - Affiche les arguments
     mkdir         - Crée un nouveau répertoire
@@ -180,5 +183,119 @@ Commandes disponibles:
 
     bash_history() {
         return "Historique des commandes :\n    " + this.commandHistory.join("\n    ");
+    }
+
+    man(command) {
+
+        if (!command) {
+            return 'man: argument manquant';
+        }
+
+        console.log(command == "help");
+        
+
+        let syntaxe;
+        let args;
+        let description;
+
+        switch(command) {
+            case 'help' :
+                syntaxe = "help";
+                args = {}
+                description = "Affiche la liste des commandes disponibles avec une courte description"
+                break;
+            case 'clear' :
+                syntaxe = "clear";
+                args = {}
+                description = "Efface l'écran"
+                break;
+            case 'echo' :
+                syntaxe = "echo <argument>";
+                args = {}
+                description = "Affiche <argument>"
+                break;
+            case 'mkdir' :
+                syntaxe = "mkdir <name>";
+                args = {"name": "Nom du dossier"}
+                description = "Crée un dossier \"<name>\""
+                break;
+            case 'ls' :
+                syntaxe = "ls";
+                args = {}
+                description = "Liste les fichier et dossier du répertoire courant"
+                break;
+            case 'cd' :
+                syntaxe = "cd <name>";
+                args = {"name":"Nom du dossier"}
+                description = "Navique vers le dossier <name>"
+                break;
+            case 'nano' :
+                syntaxe = "nano <name>";
+                args = {"name":"Nom du fichier"}
+                description = "Cré et/ou édite le fichier text <name>"
+                break;
+            case 'cat' :
+                syntaxe = "cat <name>";
+                args = {"name":"Nom du fichier"}
+                description = "Affiche le fichier text <name>"
+                break;
+            case 'calc' :
+                syntaxe = "calc <expr>";
+                args = {"expr":"Expresion mathématique"}
+                description = "Affiche le resultat de <expr>"
+                break;
+            case 'pwd' :
+                syntaxe = "pwd";
+                args = {}
+                description = "Affiche le répertoire courant"
+                break;
+            case 'rand' :
+                syntaxe = "rand <min> <max>";
+                args = {"min":"Valeur minimum","max":"Valeur maximum"}
+                description = "Tire un ombre au sort entre <min> et <max>"
+                break;
+            case 'flipcoin' :
+                syntaxe = "flipcoin";
+                args = {}
+                description = "Fait un pil ou face"
+                break;
+            case 'bash_history' :
+                syntaxe = "bash_history";
+                args = {}
+                description = "Affiche l'historique des commandes"
+                break;
+            case 'credits' :
+                syntaxe = "credits";
+                args = {}
+                description = "Affiche le lien des crédits"
+                break;
+            case 'man' :
+                syntaxe = "man <command>";
+                args = {"command": "Commande dont vous voulez l'aide"}
+                description = "Affiche l'aide de la commande en argument"
+                break;
+            case '' :
+                syntaxe = "man <command>";
+                args = {"command": "Commande dont vous voulez l'aide"}
+                description = "Affiche l'aide de la commande en argument"
+                break;
+            
+            default :
+                return `L'aide pour la commande ${command} n'exsiste pas`
+        }
+
+        output = `Aide de ${command} :\n`
+        output += `\tSyntaxe :\n\t\t${syntaxe}\n`
+        if (Object.keys(args).length > 0) {
+            output += `\tArguments :\n`
+            for (const key in args) {
+                const value = args[key];
+                output += `\t\t<${key}> : ${value}\n`
+            }
+        }
+        output += `\tDescription :\n\t\t${description}`
+        
+
+        return output.replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
 } 
