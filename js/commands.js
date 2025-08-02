@@ -53,6 +53,8 @@ class Commands {
                 return this.cat(args[1]);
             case 'man':
                 return this.man(args[1]);
+            case 'rev':
+                return this.rev(args.slice(1).join(' '));
             case 'credits':
                 return '<a href="https://github.com/F3kri/TerminalSimulator/graphs/contributors" target="_blank">Page de credits</a>';
             case '':
@@ -80,6 +82,7 @@ Commandes disponibles :
     flipcoin      - Lance une pièce (pile ou face)
     bash_history  - Affiche l'historique des commandes
     credits       - Affiche l'url de la page de credits
+    rev           - Inverse l'entrée
         `.trim();
     }
 
@@ -268,6 +271,10 @@ Commandes disponibles :
                 syntaxe = "credits";
                 args = {}
                 description = "Affiche le lien des crédits"
+            case 'rev' :
+                syntaxe = "rev <string>";
+                args = {"<string>" : "Chaine de caractère à inverser"}
+                description = "Inverse <string>"
                 break;
             case 'man' :
                 syntaxe = "man <command>";
@@ -297,5 +304,12 @@ Commandes disponibles :
         
 
         return output.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    rev(entry) {
+        if (!entry) {
+            return 'rev: argument manquant';
+        }
+        return entry.split('').reverse().join('');
     }
 } 
