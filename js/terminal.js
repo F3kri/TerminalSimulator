@@ -134,7 +134,7 @@ class Terminal {
     }
 
     getPrompt() {
-        return `user@ubuntu<span style="color:white;">:<span class="directory">${this.fileSystem.getCurrentDirectory()}</span>$</span> `;
+        return `user@ubuntu<span style="color:white;">:<span class="directory">${this.fileSystem.getCurrentDirectory().replace("/home/user", "~")}</span>$</span> `;
     }
 
     displayPrompt() {
